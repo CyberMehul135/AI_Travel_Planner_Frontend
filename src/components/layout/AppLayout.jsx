@@ -44,7 +44,7 @@ export default function AppLayout() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["userDetails"],
     queryFn: () => getUserDetails(),
     staleTime: 10000,
   });
