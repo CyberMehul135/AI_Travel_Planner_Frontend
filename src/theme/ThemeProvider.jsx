@@ -13,8 +13,8 @@ function getSystemTheme() {
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    if (typeof window === "undefined") return "system";
-    return localStorage.getItem(THEME_KEY) || "system";
+    if (typeof window === "undefined") return "dark";
+    return localStorage.getItem(THEME_KEY) || "dark";
   });
 
   useEffect(() => {

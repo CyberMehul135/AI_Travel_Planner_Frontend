@@ -201,7 +201,7 @@ export const Profile = () => {
                 </div>
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="absolute -bottom-2 -right-2 w-10 h-10 rounded-xl gradient-btn flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110"
+                  className="absolute -bottom-2 -right-2 w-10 h-10 rounded-xl gradient-btn flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 max-md:opacity-100"
                 >
                   <Camera className="w-4 h-4" />
                 </button>
