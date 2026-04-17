@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
   ArrowBigDownDash,
+  Building,
   CalendarDays,
   IndianRupeeIcon,
   MapPin,
@@ -37,6 +38,7 @@ export const TripDetailsCard = ({
   loading,
   err,
 }) => {
+  console.log(data);
   const createTripMutation = useMutation({
     mutationFn: (tripData) => createTrip(tripData),
     onSuccess: () => {
@@ -376,16 +378,27 @@ export const TripDetailsCard = ({
                         className="p-4 flex flex-col gap-0 rounded-sm bg-green-500/10 border-none"
                         key={i}
                       >
-                        <p className="mb-2! text-foreground font-medium">
-                          {dinner?.name}
-                        </p>
+                        <div className="mb-2!">
+                          <div className="flex items-center gap-2">
+                            <Building size={11} />
+                            <p className="mb-0! text-foreground font-medium">
+                              {dinner?.name}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <MapPin size={12} />
+                            <p className="text-xs m-0! text-muted-foreground">
+                              {dinner?.location}
+                            </p>
+                          </div>
+                        </div>
                         <div className="flex flex-col items-start gap-0">
+                          <p className="text-xs m-0 text-muted-foreground mb-0!">
+                            {dinner?.cuisine}
+                          </p>
                           <h2 className="text-sm font-bold text-green-400">
                             INR {dinner?.cost}
                           </h2>
-                          <p className="text-xs m-0 text-muted-foreground">
-                            {dinner?.cuisine}
-                          </p>
                         </div>
                       </Card>
                     ))}
