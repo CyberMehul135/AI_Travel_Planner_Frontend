@@ -26,6 +26,16 @@ export const Profile = () => {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(null);
 
+  const formatDateToDDMonthYYYY = (dateString) => {
+    const date = new Date(dateString);
+
+    const day = date.getDate();
+    const month = date.toLocaleString("en-IN", { month: "long" });
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+  };
+
   const { data, loading, err } = useQuery({
     queryKey: ["userDetails"],
     queryFn: () => getUserDetails(),
@@ -224,7 +234,8 @@ export const Profile = () => {
                     <Shield className="w-3 h-3" /> Free Plan
                   </span>
                   <span className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Calendar className="w-3 h-3" /> Joined April 2026
+                    <Calendar className="w-3 h-3" /> Joined{" "}
+                    {formatDateToDDMonthYYYY(profile?.createdAt)}
                   </span>
                 </div>
               </div>
