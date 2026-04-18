@@ -16,6 +16,7 @@ import { AccountOptions } from "../common/AccountOptions";
 import { useQuery } from "@tanstack/react-query";
 import { getUserDetails } from "@/features/user/user.service";
 import { Toaster } from "../ui/sonner";
+import { ScrollRestoration } from "../common/ScrollRestoration";
 
 export default function AppLayout() {
   const navItems = [
@@ -51,6 +52,7 @@ export default function AppLayout() {
 
   return (
     <SidebarProvider>
+      <ScrollRestoration />
       <div className="flex flex-col min-h-screen w-full bg-card">
         {/* [ A ] Header-Top */}
         <header className="sticky top-0 z-50 bg-transparent backdrop-blur-3xl w-full max-w-[1600px] mx-auto flex justify-between h-16 items-center gap-2 border-b px-10 max-[920px]:px-4">

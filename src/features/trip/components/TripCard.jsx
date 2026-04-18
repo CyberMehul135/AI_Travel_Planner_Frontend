@@ -1,69 +1,78 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CalendarDays, MapPin, Trash2, Users, Wallet } from "lucide-react";
+import { CalendarDays, Trash2, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { deleteTrip } from "../trip.service";
-import { toast } from "sonner";
-import { TripDeleteDialog } from "./TripDeleteDialog";
 import { useDispatch } from "react-redux";
 import { toggleDeleteDialog } from "../tripSlice";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { formatDateToDDMonthYYYY } from "@/shared/utils/formatDate";
 
 export const TripCard = ({ data }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Functions
-  const handleTripDelete = (e, tripId) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    tripDeleteMutation.mutate(tripId);
-  };
-
   return (
-    <div
-      className="p-5 bg-card/30  transition-all hover:-translate-y-1 border cursor-pointer dark:border-card rounded-3xl group"
+    <Card
+      className="group relative mx-auto w-full max-w-sm pt-0 cursor-pointer bg-card/30  transition-all hover:-translate-y-1 rounded-lg border-none "
       onClick={() => navigate(`/trips/${data._id}`)}
     >
-      <div className="flex items-center justify-between">
-        <MapPin className="box-content p-2 gradient-btn rounded-xl" />
-        <Trash2
-          size={18}
-          className="text-destructive/80 p-2 box-content bg-destructive/10 rounded-2xl hover:bg-destructive/20 group-hover:block md:hidden"
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(
-              toggleDeleteDialog({
-                isOpen: true,
-                data: { id: data._id, name: data.quickSummary.destination },
-              }),
-            );
-          }}
-        />
-      </div>
-      <h3 className="text-xl font-bold my-3">
-        {data.quickSummary.destination}
-      </h3>
-
-      <div>
-        <div className="flex items-center gap-2 mb-2">
-          <CalendarDays size={18} color="#5B4BB6" />
-          <p className="text-sm text-muted-foreground">
-            {data.quickSummary.startDate} - {data.quickSummary.endDate}
+      <div className="absolute inset-0 z-30 h-35 max-sm:h-25 bg-black/25" />
+      <img
+        src={data?.quickSummary?.image}
+        alt="Event cover"
+        className="relative z-20 h-35 max-sm:h-25 w-full object-cover brightness-100  dark:brightness-90"
+      />
+      <Trash2
+        size={18}
+        className="max-sm:size-3.5 text-white p-2 box-content bg-gray-800/50 rounded-2xl hover:bg-gray-800/90 group-hover:block md:hidden absolute top-2 right-2 z-30"
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(
+            toggleDeleteDialog({
+              isOpen: true,
+              data: { id: data._id, name: data.quickSummary.destination },
+            }),
+          );
+        }}
+      />
+      <CardHeader className={cn("max-sm:px-2")}>
+        <CardTitle
+          className={cn("font-semibold text-lg max-sm:text-lg -mt-2 mb-0.5")}
+        >
+          {data.quickSummary.destination}
+        </CardTitle>
+        <CardContent
+          className={cn("px-0 flex flex-col gap-3 text-muted-foreground -mt-1")}
+        >
+          <div className="flex items-center gap-2  max-sm:hidden">
+            <CalendarDays size={14} />
+            <p className="text-xs ">
+              {formatDateToDDMonthYYYY(data.quickSummary.startDate)} -{" "}
+              {formatDateToDDMonthYYYY(data.quickSummary.endDate)}
+            </p>
+          </div>
+          <p className="text-muted-foreground text-xs max-sm:mb-2.5 sm:hidden">
+            {data.quickSummary.totalDays}-day trip to{" "}
+            {data.quickSummary.destination}
+          </p>
+        </CardContent>
+      </CardHeader>
+      <CardFooter className={cn("flex justify-between py-2.5 max-sm:hidden ")}>
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <Users size={15} />
+          <p className="text-xs">{data.quickSummary.travelers} travellers</p>
+        </div>
+        <div>
+          <p className="font-medium text-xs">
+            ₹{data.quickSummary.budget.toLocaleString("en-IN")}
           </p>
         </div>
-        <div className="flex items-center gap-2 mb-2">
-          <Wallet size={18} color="#5B4BB6" />
-          <p className="text-sm text-muted-foreground">
-            ₹{data.quickSummary.budget}
-          </p>
-        </div>
-        <div className="flex items-center gap-2 mb-2">
-          <Users size={18} color="#5B4BB6" />
-          <p className="text-sm text-muted-foreground">
-            {data.quickSummary.travelers} Adults
-          </p>
-        </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };

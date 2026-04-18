@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getUserDetails, updateUserDetails } from "../user.service";
+import { formatDateToMonthDDYYYY } from "@/shared/utils/formatDate";
 
 export const Profile = () => {
   const fileInputRef = useRef(null);
@@ -25,16 +26,6 @@ export const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(null);
-
-  const formatDateToDDMonthYYYY = (dateString) => {
-    const date = new Date(dateString);
-
-    const day = date.getDate();
-    const month = date.toLocaleString("en-IN", { month: "long" });
-    const year = date.getFullYear();
-
-    return `${day} ${month} ${year}`;
-  };
 
   const { data, loading, err } = useQuery({
     queryKey: ["userDetails"],
@@ -235,7 +226,7 @@ export const Profile = () => {
                   </span>
                   <span className="text-xs text-muted-foreground flex items-center gap-1">
                     <Calendar className="w-3 h-3" /> Joined{" "}
-                    {formatDateToDDMonthYYYY(profile?.createdAt)}
+                    {formatDateToMonthDDYYYY(profile?.createdAt)}
                   </span>
                 </div>
               </div>

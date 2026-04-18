@@ -9,6 +9,7 @@ export const MyTrips = () => {
     queryFn: () => getTrips(),
     staleTime: 3000,
   });
+  console.log(data);
 
   return (
     <>
