@@ -5,10 +5,10 @@ import { useParams } from "react-router-dom";
 
 export const TripDetails = () => {
   const { id } = useParams();
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["trip"],
+  const { data, isLoading, error, isFetching } = useQuery({
+    queryKey: ["trip", id],
     queryFn: () => getTrip(id),
-    staleTime: 1000,
+    staleTime: 3000,
   });
 
   return (
@@ -18,7 +18,7 @@ export const TripDetails = () => {
       tripSummary={true}
       buttons={false}
       data={data?.data?.trip}
-      loading={isLoading}
+      loading={isLoading || isFetching}
       err={error}
     />
   );
