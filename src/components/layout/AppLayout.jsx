@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserDetails } from "@/features/user/user.service";
 import { Toaster } from "../ui/sonner";
 import { ScrollRestoration } from "../common/ScrollRestoration";
+import { MobileBottomNav } from "../common/MobileBottomNav";
 
 export default function AppLayout() {
   const navItems = [
@@ -59,7 +60,7 @@ export default function AppLayout() {
           {/* 1 ] HEADING*/}
           <Link className="flex gap-2 items-center">
             <Planner className="gradient-btn box-content p-2 rounded-2xl" />
-            <div className="max-[920px]:hidden">
+            <div className="max-[920px]:">
               <h4 className="text-lg font-medium gradient-text">
                 AI Trip Planner
               </h4>
@@ -68,9 +69,9 @@ export default function AppLayout() {
           </Link>
 
           {/* 2 ]  NAVLINKS*/}
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5 max-[920px]:hidden">
             <SidebarTrigger />
-            <div className="flex items-center gap-2 max-[920px]:hidden">
+            <div className="flex items-center gap-2 ">
               {navItems.map((item) => (
                 <NavLink
                   key={item.title}
@@ -119,6 +120,9 @@ export default function AppLayout() {
           </SidebarInset>
         </div>
       </div>
+
+      {/* [ C ] Mobile Navbar */}
+      <MobileBottomNav />
     </SidebarProvider>
   );
 }
