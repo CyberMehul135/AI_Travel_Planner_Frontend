@@ -27,6 +27,7 @@ import { createTrip } from "../trip.service";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { TripDetailsCardLoading } from "./loaders/TripDetailsCardLoading";
+import { getPluralSuffix } from "@/shared/utils/pluralize";
 
 export const TripDetailsCard = ({
   destinationImg = true,
@@ -38,7 +39,6 @@ export const TripDetailsCard = ({
   loading,
   err,
 }) => {
-  console.log(data);
   const createTripMutation = useMutation({
     mutationFn: (tripData) => createTrip(tripData),
     onSuccess: () => {
@@ -84,21 +84,22 @@ export const TripDetailsCard = ({
       <Card className="relative mx-auto w-full max-w-[800px] pt-0 bg-background ring-0">
         {/* 1. Hero-Image */}
         {destinationImg && (
-          <div className="relative rounded-xl overflow-hidden max-md:mx-2">
+          <div className="relative rounded-xl overflow-hidden  max-md:mx-0">
             <img
               src={data?.quickSummary?.image}
               className="h-[250px] w-full object-cover"
             />
 
-            <div className="absolute inset-0 bg-black/50 p-6 flex flex-col justify-end">
+            <div className="absolute inset-0 bg-black/30 p-6 flex flex-col justify-end">
               <h1 className="text-3xl font-bold text-white">
                 {data?.quickSummary?.destination}
               </h1>
 
               <p className="text-gray-300">
                 {data?.quickSummary?.totalDays} Days •{" "}
-                {data?.quickSummary?.travelers} Travelers •{" "}
-                {data?.quickSummary?.budget}
+                {data?.quickSummary?.travelers} Traveler
+                {getPluralSuffix(data?.quickSummary?.travelers)} • ₹
+                {data?.quickSummary?.budget?.toLocaleString("en-IN")}
               </p>
             </div>
           </div>
@@ -106,7 +107,7 @@ export const TripDetailsCard = ({
 
         {/* 2. Trip Summary */}
         {tripSummary && (
-          <Card className="py-4 px-5 max-md:mx-2 mt-4 rounded-2xl">
+          <Card className="py-4 px-5 max-md:mx-0 max-md:mt-0 max-md:px-2 max-md:bg-transparent max-md:border-none mt-4 rounded-2xl border ring-0">
             <h3 className="text-lg font-semibold flex gap-1 items-center mb-2">
               Trip Summary
             </h3>
@@ -194,7 +195,7 @@ export const TripDetailsCard = ({
 
         {/* 3. Highlight-things */}
         <div className="grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-4 py-4 max-md:px-2">
-          <Card className="p-4 flex flex-col gap-1">
+          <Card className="p-4 flex flex-col gap-1 border ring-0">
             <div className="flex flex-row items-center gap-2">
               <IndianRupeeIcon className="p-2 box-content bg-blue-500 rounded-lg" />
               <div className="flex flex-col">
@@ -208,7 +209,7 @@ export const TripDetailsCard = ({
               Budget for your experience
             </p>
           </Card>
-          <Card className="p-4 flex flex-col gap-1">
+          <Card className="p-4 flex flex-col gap-1 border ring-0">
             <div className="flex flex-row items-center gap-2">
               <Star className="p-2 box-content bg-purple-500 rounded-lg fill-white" />
               <div className="flex flex-col">
@@ -220,7 +221,7 @@ export const TripDetailsCard = ({
               Handpicked experience for you
             </p>
           </Card>
-          <Card className="p-4 flex flex-col gap-1">
+          <Card className="p-4 flex flex-col gap-1 border ring-0">
             <div className="flex flex-row items-center gap-2">
               <Utensils className="p-2 box-content bg-green-500 rounded-lg fill-white" />
               <div className="flex flex-col">
@@ -236,7 +237,7 @@ export const TripDetailsCard = ({
 
         {/* 4. Important-Information */}
         <div className="max-md:px-2">
-          <Card className="p-4 flex flex-col gap-1 dark:bg-amber-950 bg-amber-200">
+          <Card className="p-4 flex flex-col gap-1 dark:bg-amber-950 bg-amber-200 border ring-0">
             <h3 className="text-lg font-semibold flex gap-1 items-center mb-2">
               <ShieldAlert className="fill-amber-500" />
               <p>Important Travel Information</p>
@@ -262,10 +263,10 @@ export const TripDetailsCard = ({
               <AccordionItem
                 key={day.day}
                 value={`day-${day.day}`}
-                className="border px-0 rounded-lg"
+                className="border px-0 rounded-lg max-md:border-none "
               >
                 {/* Iteration-Accordian-Header */}
-                <AccordionTrigger className="flex justify-between bg-muted rounded-lg py-5 px-5 hover:no-underline cursor-pointer">
+                <AccordionTrigger className="flex justify-between max-md:border bg-muted rounded-lg py-5 px-5 hover:no-underline cursor-pointer">
                   <div className="flex justify-between w-full items-center ">
                     <div className="flex items-center gap-2">
                       <div className="size-10 max-md:hidden flex justify-center items-center text-white text-sm font-semibold rounded-full bg-blue-500">
@@ -292,7 +293,7 @@ export const TripDetailsCard = ({
                       <p className="text-blue-500 font-semibold max-md:hidden">
                         INR {day?.dailyBudget}
                       </p>
-                      <Badge className="bg-blue-500/30 text-sm py-3 md:hidden">
+                      <Badge className="bg-blue-500 text-sm py-3 md:hidden">
                         ₹{day?.dailyBudget}
                       </Badge>
                     </div>
@@ -300,7 +301,7 @@ export const TripDetailsCard = ({
                 </AccordionTrigger>
 
                 {/* Iteration-Accordian-Content */}
-                <AccordionContent className="px-5 pb-6 mt-5 h-fit">
+                <AccordionContent className="px-5 pb-6 max-md:px-0 mt-5 h-fit">
                   {/* Header */}
                   <h3 className="font-medium flex items-center gap-1">
                     <MapPin color="#2662ED" className="" />

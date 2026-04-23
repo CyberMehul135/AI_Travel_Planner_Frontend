@@ -7,7 +7,7 @@ export const QuickActions = ({ className }) => {
 
   return (
     <div
-      className={`mt-5 bg-card/50 max-md:bg-transparent  p-7 max-md:p-2 rounded-lg w-full h-fit ${className}`}
+      className={`mt-5 bg-card/50 shadow-sm max-md:border-none max-md:bg-transparent border p-7 max-md:p-2 rounded-lg w-full h-fit ${className}`}
     >
       <h2 className="flex items-center gap-3 font-bold text-xl mb-4">
         <Rocket className="text-blue-500" />

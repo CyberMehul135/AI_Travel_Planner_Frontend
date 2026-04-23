@@ -25,7 +25,6 @@ export default function Step3({ nextStep, prevStep }) {
   const { formData } = useSelector((state) => state.trip);
   const [selectedProvider, setSelectedProvider] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
-  // const [err, serErr] = useState(null);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["aiModels"],
@@ -80,8 +79,8 @@ export default function Step3({ nextStep, prevStep }) {
   };
 
   return (
-    <div className="max-w-[800px] mx-auto bg-card/40 p-8 max-md:px-3 max-md:py-5 border rounded-xl">
-      <div className="max-w-[800px] mb-8 bg-linear-to-r from-purple-500/20 to-blue-500/20 rounded-xl px-5 py-8">
+    <div className="max-w-[800px] md:shadow-sm mx-auto max-md:bg-transparent max-md:px-0 max-md:pt-0 max-md:border-none bg-card/40 p-8  max-md:py-5 border border-border rounded-xl">
+      <div className="max-w-[800px] mb-8 bg-linear-to-r dark:from-purple-500/20 dark:to-blue-500/20 from-purple-500/60 to-blue-500/40 rounded-xl px-5 py-8">
         <Plane
           size={40}
           className={`gradient-btn box-content p-5 rounded-full overflow-visible mb-3 mx-auto ${getTravelPlanMutation.isPending ? "animate-spin animation-duration-[3s]" : ""}`}
@@ -89,7 +88,7 @@ export default function Step3({ nextStep, prevStep }) {
         <h2 className="text-xl font-semibold text-foreground text-center mb-5">
           Ready to Create Your Perfect Itinery?
         </h2>
-        <p className="max-w-[600px] mx-auto text-center text-sm text-muted-foreground font-medium mb-8">
+        <p className="max-w-[600px] mx-auto text-center text-sm text-muted-foreground font-medium mb-8 max-sm:hidden">
           Our Ai will analyze your preferences and create a personalized itinery
           with activities, restaurants and accomodation tailored just for you.
         </p>
@@ -114,7 +113,7 @@ export default function Step3({ nextStep, prevStep }) {
         </div>
 
         {/* Selectors */}
-        <div className="flex justify-center w-2/3 mx-auto gap-2 mt-3 mb-5">
+        <div className="flex justify-center w-2/3 mx-auto gap-2 mt-3 mb-5 max-sm:w-full">
           <SelectDemo
             options={providers}
             label="AI Provider"
@@ -125,6 +124,7 @@ export default function Step3({ nextStep, prevStep }) {
               setSelectedModel("");
             }}
             disabled={getTravelPlanMutation.isPending}
+            className="w-full!"
           />
 
           <SelectDemo
@@ -134,6 +134,7 @@ export default function Step3({ nextStep, prevStep }) {
             value={selectedModel}
             onChange={(value) => setSelectedModel(value)}
             disabled={!selectedProvider || getTravelPlanMutation.isPending}
+            className="w-full!"
           />
         </div>
 
@@ -155,7 +156,12 @@ export default function Step3({ nextStep, prevStep }) {
       </div>
 
       <div className="w-full flex justify-between">
-        <Button onClick={prevStep} className="w-[48%] py-6" variant="secondary">
+        <Button
+          onClick={prevStep}
+          className="w-[48%] py-6 border ring-0 border-gray-200 dark:border-border"
+          variant="secondary"
+          disabled={getTravelPlanMutation.isPending}
+        >
           <MoveLeft className="size-5" />
           Previous
         </Button>

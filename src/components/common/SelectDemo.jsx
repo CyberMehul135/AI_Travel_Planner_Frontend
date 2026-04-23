@@ -14,10 +14,11 @@ export function SelectDemo({
   value,
   onChange,
   disabled,
-  label, // 👈 new prop
+  label,
+  className,
 }) {
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div className={`flex flex-col gap-1 w-full ${className}`}>
       {/* Label */}
       {label && (
         <label className="text-xs font-medium text-muted-foreground ml-1.5">
@@ -25,8 +26,15 @@ export function SelectDemo({
         </label>
       )}
 
-      <Select value={value} onValueChange={onChange} disabled={disabled}>
-        <SelectTrigger className="w-full max-w-48 h-10!">
+      <Select
+        value={value}
+        onValueChange={onChange}
+        disabled={disabled}
+        className="w-full max-w-48 h-10!"
+      >
+        <SelectTrigger
+          className={`w-full max-w-48 h-10! border dark:border-gray-400 `}
+        >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
 

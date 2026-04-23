@@ -23,7 +23,7 @@ export default function Step1({ nextStep }) {
   };
 
   return (
-    <div className="max-w-[800px] mx-auto bg-card/40 p-10 max-md:px-3 max-md:py-5 border rounded-xl">
+    <div className="max-w-[800px] md:shadow-sm mx-auto bg-card/40 max-md:bg-transparent max-md:border-none max-md:px-1  p-10  max-md:py-5 border rounded-xl">
       <div className="max-w-[800px] grid grid-cols-2 max-md:grid-cols-1 gap-x-5 gap-y-5 mb-8">
         <Field className="gap-0">
           <FieldLabel
@@ -35,7 +35,7 @@ export default function Step1({ nextStep }) {
           <Input
             placeholder="Enter destination"
             id="destination"
-            className="p-6"
+            className="p-6 placeholder:text-gray-400 dark:placeholder:text-gray-500"
             value={trip.destination}
             onChange={(e) =>
               dispatch(
@@ -54,7 +54,7 @@ export default function Step1({ nextStep }) {
           <Input
             placeholder="2"
             id="travellers"
-            className="p-6"
+            className="p-6 placeholder:text-gray-400 dark:placeholder:text-gray-500"
             value={trip.travellers}
             onChange={(e) =>
               dispatch(
@@ -74,7 +74,7 @@ export default function Step1({ nextStep }) {
             type="date"
             placeholder="2"
             id="startDate"
-            className="p-6"
+            className="p-6 dark:scheme-dark placeholder:text-gray-400 dark:placeholder:text-gray-500"
             value={trip.startDate}
             onChange={(e) =>
               dispatch(
@@ -91,7 +91,7 @@ export default function Step1({ nextStep }) {
             type="date"
             placeholder="2"
             id="endDate"
-            className="p-6"
+            className="p-6 dark:scheme-dark placeholder:text-gray-400 dark:placeholder:text-gray-500"
             value={trip.endDate}
             onChange={(e) =>
               dispatch(
@@ -108,7 +108,7 @@ export default function Step1({ nextStep }) {
             type="number"
             placeholder="₹70,000"
             id="budget"
-            className="p-6"
+            className="p-6 dark:scheme-dark placeholder:text-gray-400 dark:placeholder:text-gray-500"
             value={trip.budget}
             onChange={(e) =>
               dispatch(
@@ -122,7 +122,7 @@ export default function Step1({ nextStep }) {
       <div className="w-full flex justify-between">
         <Button
           onClick={nextStep}
-          className="w-[48%] py-6"
+          className="w-[48%] py-6 border border-gray-300 dark:border-border"
           variant="secondary"
           disabled
         >

@@ -84,7 +84,7 @@
 }
 
 :root {
-  --background: oklch(0.93 0.0017 247.839);
+  --background: #f6f7f9;
   --foreground: oklch(0.1649 0.0352 281.8285);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.1649 0.0352 281.8285);
@@ -99,7 +99,7 @@
   --accent: oklch(0.8903 0.1739 171.269);
   --accent-foreground: oklch(0.1649 0.0352 281.8285);
   --destructive: oklch(0.6535 0.2348 34.037);
-  --border: oklch(0.9205 0.0086 225.0878);
+  --border: #e5e7eb;
   --input: oklch(0.9205 0.0086 225.0878);
   --ring: oklch(0.6726 0.2904 341.4084);
   --chart-1: oklch(0.6726 0.2904 341.4084);

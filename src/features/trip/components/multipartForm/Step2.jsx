@@ -114,7 +114,7 @@ export default function Step2({ nextStep, prevStep }) {
   const trip = useSelector((state) => state.trip.formData);
 
   return (
-    <div className="max-w-[800px] border mx-auto bg-card/40 p-10 max-md:px-3 max-md:py-5 rounded-xl">
+    <div className="max-w-[800px] md:shadow-sm border max-md:bg-transparent max-md:px-1 max-md:border-none mx-auto bg-card/40 p-10  max-md:py-5 rounded-xl">
       {/* Interests */}
       <div className="mb-8">
         <h2 className="mb-5 text-lg font-semibold">What are your interests?</h2>
@@ -138,17 +138,6 @@ export default function Step2({ nextStep, prevStep }) {
               />
             </Field>
           ))}
-
-          {/* <div className="w-full flex max-md:flex-col gap-5">
-        <Button onClick={nextStep} className="w-full py-6" variant="secondary">
-          <MoveLeft className="size-5" />
-          Previous
-        </Button>
-        <Button onClick={nextStep} className="w-full py-6 ">
-          Next
-          <MoveRight className="size-5" />
-        </Button>
-      </div> */}
         </div>
       </div>
 
@@ -230,12 +219,16 @@ export default function Step2({ nextStep, prevStep }) {
               }),
             )
           }
-          className="min-h-[120px]"
+          className="min-h-[120px] placeholder:text-gray-400 dark:placeholder:text-gray-500"
         />
       </div>
 
       <div className="w-full flex justify-between">
-        <Button onClick={prevStep} className="w-[48%] py-6" variant="secondary">
+        <Button
+          onClick={prevStep}
+          className="w-[48%] py-6 border ring-0 border-gray-200 dark:border-border"
+          variant="secondary"
+        >
           <MoveLeft className="size-5" />
           Previous
         </Button>

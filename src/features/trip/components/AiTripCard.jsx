@@ -466,7 +466,7 @@ export const AiTripCard = ({ className }) => {
 
   return (
     <div
-      className={`mt-5 bg-card/50 max-md:p-0 max-md:bg-transparent p-7 rounded-lg w-full ${className}`}
+      className={`mt-5 bg-card shadow-sm max-md:border-none dark:bg-card/50 border max-md:p-0 max-md:bg-background! p-7 rounded-lg w-full ${className}`}
     >
       {/* Heading */}
       <div className="font-semibold flex justify-between items-center">
@@ -484,6 +484,7 @@ export const AiTripCard = ({ className }) => {
             setSelectedProvider(value);
             setSelectedModel(""); // reset model
           }}
+          className="w-1/2!"
         />
 
         <SelectDemo
@@ -491,7 +492,8 @@ export const AiTripCard = ({ className }) => {
           placeholder="Models"
           value={selectedModel}
           onChange={(value) => setSelectedModel(value)}
-          disabled={!selectedProvider} // jab tak provider select na ho
+          disabled={!selectedProvider}
+          className="w-1/2!"
         />
       </div>
 
@@ -500,7 +502,7 @@ export const AiTripCard = ({ className }) => {
         {trips?.map((trip, i) => (
           <div
             key={i}
-            className="grid grid-cols-12 gap-7 bg-card p-3 rounded-lg cursor-pointer"
+            className="grid grid-cols-12 gap-7 bg-card p-3 rounded-lg cursor-pointer border"
             onClick={() => navigate(`/trips/${i}/ai`)}
           >
             <Earth className="gradient-btn box-content p-2 rounded-lg col-span-2" />
@@ -541,7 +543,7 @@ export const AiTripCard = ({ className }) => {
           });
         }}
         disabled={isPending || !selectedProvider || !selectedModel}
-        className="text-foreground hover:text-white mt-5 w-full py-5 bg-transparent border-2 border-blue-600 hover:bg-blue-600 font-semibold cursor-pointer"
+        className="text-foreground hover:text-white mt-5 w-full py-5 dark:bg-transparent border border-gray-300 dark:border-gray-700 bg-gray-300 hover:bg-blue-600 dark:hover:bg-blue-600 ring-0 font-semibold cursor-pointer"
       >
         <RefreshCw
           className={`${isPending && "animate-spin animation-duration-[2s]"}`}

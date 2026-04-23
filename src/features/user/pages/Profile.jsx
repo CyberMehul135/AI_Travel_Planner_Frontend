@@ -164,7 +164,7 @@ export const Profile = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="glass-card overflow-hidden"
+          className="bg-card border overflow-hidden rounded-lg"
         >
           {/* Banner */}
           <div
@@ -241,7 +241,7 @@ export const Profile = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="glass-card p-6 space-y-5"
+            className="bg-card/50 rounded-lg border p-6 space-y-5"
           >
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
               <Mail className="w-4 h-4" /> Contact Info
@@ -254,7 +254,7 @@ export const Profile = () => {
                   Email Address
                 </label>
 
-                <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary/30">
+                <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary">
                   <Mail className="w-4 h-4 text-primary shrink-0" />
                   <p className="text-sm font-medium truncate">
                     {profile?.email}
@@ -276,7 +276,7 @@ export const Profile = () => {
                     className="bg-secondary/50 border-primary/30 rounded-xl"
                   />
                 ) : (
-                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary/30">
+                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary">
                     <Phone className="w-4 h-4 text-primary shrink-0" />
                     <p className="text-sm font-medium truncate">
                       {profile?.phone}
@@ -299,7 +299,7 @@ export const Profile = () => {
                     className="bg-secondary/50 border-primary/30 rounded-xl"
                   />
                 ) : (
-                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary/30">
+                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary">
                     <MapPin className="w-4 h-4 text-primary shrink-0" />
                     <p className="text-sm font-medium truncate">
                       {profile?.location}
@@ -315,7 +315,7 @@ export const Profile = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="glass-card p-6 space-y-5"
+            className="bg-card/50 border rounded-lg p-6 space-y-5"
           >
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
               <User className="w-4 h-4" /> About Me

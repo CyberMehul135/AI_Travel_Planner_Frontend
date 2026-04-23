@@ -11,21 +11,24 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { formatDateToDDMonthYYYY } from "@/shared/utils/formatDate";
+import { getPluralSuffix } from "@/shared/utils/pluralize";
 
 export const TripCard = ({ data }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  console.log(data.quickSummary.travelers > 1 && "s");
+
   return (
     <Card
-      className="group relative mx-auto w-full max-w-sm pt-0 cursor-pointer bg-card/30  transition-all hover:-translate-y-1 rounded-lg border-none "
+      className="group relative shadow-sm mx-auto w-full max-w-sm pt-0 cursor-pointer bg-card/50  transition-all hover:-translate-y-1 rounded-lg border-none "
       onClick={() => navigate(`/trips/${data._id}`)}
     >
-      <div className="absolute inset-0 z-30 h-35 max-sm:h-25 bg-black/25" />
+      <div className="absolute inset-0 z-30 h-35 max-sm:h-25 bg-black/10" />
       <img
         src={data?.quickSummary?.image}
         alt="Event cover"
-        className="relative z-20 h-35 max-sm:h-25 w-full object-cover brightness-100  dark:brightness-90"
+        className="relative z-20 h-35 max-sm:h-25 w-full object-cover brightness-100  dark:brightness-100 group-hover:scale-103 transition-all duration-300"
       />
       <Trash2
         size={18}
@@ -65,7 +68,10 @@ export const TripCard = ({ data }) => {
       <CardFooter className={cn("flex justify-between py-2.5 max-sm:hidden ")}>
         <div className="flex items-center gap-2 text-muted-foreground">
           <Users size={15} />
-          <p className="text-xs">{data.quickSummary.travelers} travellers</p>
+          <p className="text-xs">
+            {data.quickSummary.travelers} traveller
+            {getPluralSuffix(data.quickSummary.travelers)}
+          </p>
         </div>
         <div>
           <p className="font-medium text-xs">
