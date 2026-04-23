@@ -43,9 +43,8 @@ export const MobileBottomNav = () => {
           const Icon = item.icon;
 
           return (
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center" key={index}>
               <NavLink
-                key={index}
                 to={item.to}
                 end={item.to === "/trips"}
                 className={({ isActive }) =>

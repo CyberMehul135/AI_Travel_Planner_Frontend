@@ -16,7 +16,7 @@ export const QuickActions = ({ className }) => {
 
       <div className="flex gap-3 max-md:gap-5 flex-wrap">
         <QuickActionButton
-          heading="Plane New Trip"
+          heading="Plan New Trip"
           subHeading="Create AI-powered itinery"
           icon={Plane}
           className={"bg-blue-500"}
