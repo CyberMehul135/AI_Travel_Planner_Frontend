@@ -25,6 +25,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleInterests, updateFields } from "../../tripSlice";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 const interestsFields = [
   {
@@ -113,93 +115,168 @@ export default function Step2({ nextStep, prevStep }) {
   const dispatch = useDispatch();
   const trip = useSelector((state) => state.trip.formData);
 
+  const [errors, setErrors] = useState({});
+
+  const handleNext = () => {
+    const newErrors = {};
+
+    if (!trip.interests.length) newErrors.interests = true;
+    if (!trip.accomodation) newErrors.accomodation = true;
+    if (!trip.transportation) newErrors.transportation = true;
+
+    setErrors(newErrors);
+
+    const firstError = Object.keys(newErrors)[0];
+    if (firstError) {
+      document
+        .getElementById(firstError)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    nextStep();
+  };
+
   return (
     <div className="max-w-[800px] md:shadow-sm border max-md:bg-transparent max-md:px-1 max-md:border-none mx-auto bg-card/40 p-10  max-md:py-5 rounded-xl">
       {/* Interests */}
-      <div className="mb-8">
-        <h2 className="mb-5 text-lg font-semibold">What are your interests?</h2>
-        <div className="max-w-[800px] grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 gap-4 max-md:gap-x-3 max-md:gap-y-3 mx-auto">
+      <div id="interests" className="mb-8">
+        <h2
+          className={cn(
+            "mb-5 text-lg font-semibold",
+            errors.interests && "text-red-500",
+          )}
+        >
+          What are your interests?
+        </h2>
+
+        <div
+          className={cn(
+            "grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 gap-4 max-md:gap-3",
+          )}
+        >
           {interestsFields.map((field) => (
             <Field className="relative" key={field.id}>
               <Label
                 htmlFor={field.id}
-                className={`p-5 z-10 border cursor-pointer hover:scale-105 transition-all ease-in rounded-xl flex flex-col  ${trip.interests.includes(field.value) ? "gradient-btn" : "bg-card"}`}
+                className={cn(
+                  "p-5 cursor-pointer rounded-xl flex flex-col border",
+                  trip.interests.includes(field.value)
+                    ? "gradient-btn"
+                    : "bg-card",
+                )}
               >
                 <field.icon />
                 <p className="text-sm">{field.title}</p>
               </Label>
+
               <Checkbox
-                className="absolute hidden"
+                className="hidden"
                 id={field.id}
-                name={field.name}
-                value={field.value}
                 checked={trip.interests.includes(field.value)}
-                onCheckedChange={() => dispatch(toggleInterests(field.value))}
+                onCheckedChange={() => {
+                  dispatch(toggleInterests(field.value));
+                  setErrors((prev) => ({ ...prev, interests: false }));
+                }}
               />
             </Field>
           ))}
         </div>
+
+        {errors.interests && (
+          <p className="text-xs text-red-500 mt-3 ml-1">
+            Please select at least one interest
+          </p>
+        )}
       </div>
 
       {/* Accomodation */}
-      <div className="mb-8">
-        <h2 className="mb-5 text-lg font-semibold">Accommodation</h2>
-        <div className="max-w-[800px] mx-auto">
-          <RadioGroup
-            defaultValue=""
-            value={trip.accomodation}
-            onValueChange={(value) =>
-              dispatch(
-                updateFields({
-                  field: accomodationFields[0].name,
-                  value,
-                }),
-              )
-            }
-            className="grid grid-cols-2 max-lg:grid-cols-2 max-md:grid-cols-1 gap-x-5 gap-y-5 mx-auto"
-          >
-            {accomodationFields.map((field) => (
-              <div className="flex items-center gap-3 w-full" key={field.id}>
-                <RadioGroupItem
-                  value={field.value}
-                  id={field.id}
-                  className="hidden"
-                />
-                <Label
-                  htmlFor={field.id}
-                  className={`flex flex-col gap-1.5 border cursor-pointer rounded-xl items-start bg-card p-5 w-full ${trip.accomodation === field.value && "gradient-btn"}`}
-                >
-                  <h4 className="text-lg font-semibold">{field.title}</h4>
-                  <p className="text-xs m-0">{field.description}</p>
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-        </div>
+      <div id="accomodation" className="mb-8">
+        <h2
+          className={cn(
+            "mb-5 text-lg font-semibold",
+            errors.accomodation && "text-red-500",
+          )}
+        >
+          Accommodation
+        </h2>
+
+        <RadioGroup
+          value={trip.accomodation}
+          onValueChange={(value) => {
+            dispatch(updateFields({ field: "accomodation", value }));
+            setErrors((prev) => ({ ...prev, accomodation: false }));
+          }}
+          className={cn("grid grid-cols-2 max-md:grid-cols-1 gap-5")}
+        >
+          {accomodationFields.map((field) => (
+            <div key={field.id}>
+              <RadioGroupItem
+                value={field.value}
+                id={field.id}
+                className="hidden"
+              />
+
+              <Label
+                htmlFor={field.id}
+                className={cn(
+                  "flex flex-col p-5 rounded-xl cursor-pointer bg-card items-start border",
+                  trip.accomodation === field.value && "gradient-btn",
+                )}
+              >
+                <h4 className="text-lg font-semibold">{field.title}</h4>
+                <p className="text-xs m-0">{field.description}</p>
+              </Label>
+            </div>
+          ))}
+        </RadioGroup>
+
+        {errors.accomodation && (
+          <p className="text-xs text-red-500 mt-3 ml-1">
+            Please select accommodation
+          </p>
+        )}
       </div>
 
       {/* Transportation */}
-      <div className="space-y-2 mb-6">
-        <Label className="text-lg font-semibold">Transportation</Label>
+      <div id="transportation" className="space-y-2 mb-6">
+        <Label
+          className={cn(
+            "text-lg font-semibold",
+            errors.transportation && "text-red-500",
+          )}
+        >
+          Transportation
+        </Label>
 
         <Select
           value={trip.transportation}
-          onValueChange={(value) =>
-            dispatch(updateFields({ field: "transportation", value: value }))
-          }
+          onValueChange={(value) => {
+            dispatch(updateFields({ field: "transportation", value }));
+            setErrors((prev) => ({ ...prev, transportation: false }));
+          }}
         >
-          <SelectTrigger className="w-full py-6">
+          <SelectTrigger
+            className={cn(
+              "w-full py-6",
+              errors.transportation && "border-red-500",
+            )}
+          >
             <SelectValue placeholder="Select Transportation" />
           </SelectTrigger>
 
           <SelectContent>
             {transportationFields.map((field) => (
-              <SelectItem key={field} className="p-3" value={field}>
-                {field.charAt(0).toLocaleUpperCase() + field.slice(1)}
+              <SelectItem key={field} value={field} className="p-3">
+                {field.charAt(0).toUpperCase() + field.slice(1)}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
+
+        {errors.transportation && (
+          <p className="text-xs text-red-500">Please select transportation</p>
+        )}
       </div>
 
       {/* Special-Requirements */}
@@ -232,7 +309,7 @@ export default function Step2({ nextStep, prevStep }) {
           <MoveLeft className="size-5" />
           Previous
         </Button>
-        <Button onClick={nextStep} className="w-[48%] py-6 ">
+        <Button onClick={handleNext} className="w-[48%] py-6 ">
           Next
           <MoveRight className="size-5" />
         </Button>

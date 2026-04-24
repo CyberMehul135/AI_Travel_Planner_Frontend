@@ -17,8 +17,6 @@ export const TripCard = ({ data }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log(data.quickSummary.travelers > 1 && "s");
-
   return (
     <Card
       className="group relative shadow-sm mx-auto w-full max-w-sm pt-0 cursor-pointer bg-card/50  transition-all hover:-translate-y-1 rounded-lg border-none "

@@ -113,7 +113,7 @@ export default function AppLayout() {
         <div className="flex flex-1">
           <AppSidebar />
           <SidebarInset>
-            <main className="p-6 max-sm:px-3 w-full max-w-[1095px] mx-auto">
+            <main className="p-6 max-md:pb-24 max-sm:px-3 w-full max-w-[1095px] mx-auto">
               <Outlet />
               <Toaster />
             </main>
