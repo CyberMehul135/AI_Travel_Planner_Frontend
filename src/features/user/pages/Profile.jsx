@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { toast as toastify } from "react-toastify";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getUserDetails, updateUserDetails } from "../user.service";
 import { formatDateToMonthDDYYYY } from "@/shared/utils/formatDate";
@@ -26,6 +27,8 @@ export const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(null);
+  const [error, setError] = useState({});
+
 
   const { data, loading, err } = useQuery({
     queryKey: ["userDetails"],
@@ -36,10 +39,16 @@ export const Profile = () => {
   const userUpdateMutation = useMutation({
     mutationFn: (payload) => updateUserDetails(payload),
     onSuccess: (data) => {
-      console.log("Success", data);
+      toast.success("Your changes have been saved.");
+      setEditing(false);
+      setError({});
     },
     onError: (err) => {
-      console.dir(err);
+      toastify.error(err.response.data.message);
+      setError(err.response.data.errors.reduce((acc, err) => {
+        acc[err.field] = err.message;
+        return acc;
+      }, {}));
     },
   });
 
@@ -62,8 +71,7 @@ export const Profile = () => {
     userUpdateMutation.mutate(formData);
 
     setProfile(draft);
-    setEditing(false);
-    toast.success("Your changes have been saved.");
+
   };
 
   const handleCancel = () => {
@@ -102,7 +110,6 @@ export const Profile = () => {
         setProfile(updatedUser);
         setDraft(updatedUser);
 
-        toast.success("Profile photo updated!");
       },
       onError: () => {
         toast.error("Image upload failed");
@@ -134,6 +141,7 @@ export const Profile = () => {
               onClick={() => {
                 setDraft(profile);
                 setEditing(true);
+                setError({})
               }}
               className="gradient-btn rounded-2xl px-6 gap-2"
             >
@@ -208,17 +216,23 @@ export const Profile = () => {
               {/* Name + badge */}
               <div className="flex-1 min-w-0 pb-1">
                 {editing ? (
-                  <Input
-                    value={draft?.name}
-                    onChange={(e) =>
-                      setDraft((d) => ({ ...d, name: e.target.value }))
-                    }
-                    className="text-2xl font-bold h-12 max-w-sm bg-secondary/50 border-primary/30 rounded-xl"
-                  />
+                  <>
+                    <Input
+                      value={draft?.name}
+                      onChange={(e) =>
+                        setDraft((d) => ({ ...d, name: e.target.value }))
+                      }
+                      className="text-2xl font-bold h-12 max-w-sm bg-secondary/50 border-primary/30 rounded-xl"
+                    />
+                    {error?.name && <p className="text-destructive text-xs ml-2 font-medium">{error?.name}</p>}
+                  </>
                 ) : (
+
                   <h2 className="text-2xl font-bold truncate">
                     {profile?.name}
                   </h2>
+
+
                 )}
                 <div className="flex items-center gap-3 mt-2">
                   <span className="text-xs px-3 py-1 rounded-full bg-primary/15 text-primary font-medium flex items-center gap-1">
@@ -268,20 +282,27 @@ export const Profile = () => {
                   Phone Number
                 </label>
                 {editing ? (
-                  <Input
-                    value={draft?.phone}
-                    onChange={(e) =>
-                      setDraft((d) => ({ ...d, phone: e.target.value }))
-                    }
-                    className="bg-secondary/50 border-primary/30 rounded-xl"
-                  />
+                  <>
+                    <Input
+                      value={draft?.phone}
+                      onChange={(e) =>
+                        setDraft((d) => ({ ...d, phone: e.target.value }))
+                      }
+                      className="bg-secondary/50 border-primary/30 rounded-xl"
+                    />
+                    {error?.phone && <p className="text-destructive text-xs font-medium">{error?.phone}</p>}
+                  </>
+
                 ) : (
+
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary">
                     <Phone className="w-4 h-4 text-primary shrink-0" />
                     <p className="text-sm font-medium truncate">
                       {profile?.phone}
                     </p>
                   </div>
+
+
                 )}
               </div>
 
@@ -291,20 +312,26 @@ export const Profile = () => {
                   Location
                 </label>
                 {editing ? (
-                  <Input
-                    value={draft?.location}
-                    onChange={(e) =>
-                      setDraft((d) => ({ ...d, location: e.target.value }))
-                    }
-                    className="bg-secondary/50 border-primary/30 rounded-xl"
-                  />
+                  <>
+                    <Input
+                      value={draft?.location}
+                      onChange={(e) =>
+                        setDraft((d) => ({ ...d, location: e.target.value }))
+                      }
+                      className="bg-secondary/50 border-primary/30 rounded-xl"
+                    />
+                    {error?.location && <p className="text-destructive text-xs font-medium">{error?.location}</p>}
+                  </>
                 ) : (
+
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary">
                     <MapPin className="w-4 h-4 text-primary shrink-0" />
                     <p className="text-sm font-medium truncate">
                       {profile?.location}
                     </p>
                   </div>
+
+
                 )}
               </div>
             </div>
@@ -322,18 +349,24 @@ export const Profile = () => {
             </h3>
 
             {editing ? (
-              <Textarea
-                value={draft?.bio}
-                onChange={(e) =>
-                  setDraft((d) => ({ ...d, bio: e.target.value }))
-                }
-                className="bg-secondary/50 border-primary/30 rounded-xl min-h-[140px]"
-                placeholder="Tell us about yourself..."
-              />
+              <>
+                <Textarea
+                  value={draft?.bio}
+                  onChange={(e) =>
+                    setDraft((d) => ({ ...d, bio: e.target.value }))
+                  }
+                  className="bg-secondary/50 border-primary/30 rounded-xl min-h-[140px]"
+                  placeholder="Tell us about yourself..."
+                />
+                {error?.bio && <p className="text-destructive text-xs font-medium">{error?.bio}</p>}
+              </>
             ) : (
+
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {profile?.bio}
               </p>
+
+
             )}
 
             {/* Stats */}
