@@ -37,7 +37,6 @@ export const AiTripCard = ({ className }) => {
       toasty.success("Trips generated");
     },
     onError: (error) => {
-      console.dir(error);
       toast.error(
         <ErrorToast
           message={error?.response?.data?.message}
@@ -484,6 +483,7 @@ export const AiTripCard = ({ className }) => {
             setSelectedProvider(value);
             setSelectedModel(""); // reset model
           }}
+          disabled={isPending}
           className="w-1/2!"
         />
 
@@ -492,7 +492,7 @@ export const AiTripCard = ({ className }) => {
           placeholder="Models"
           value={selectedModel}
           onChange={(value) => setSelectedModel(value)}
-          disabled={!selectedProvider}
+          disabled={!selectedProvider || isPending}
           className="w-1/2!"
         />
       </div>
