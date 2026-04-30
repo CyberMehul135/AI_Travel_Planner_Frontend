@@ -29,7 +29,6 @@ export const Profile = () => {
   const [draft, setDraft] = useState(null);
   const [error, setError] = useState({});
 
-
   const { data, loading, err } = useQuery({
     queryKey: ["userDetails"],
     queryFn: () => getUserDetails(),

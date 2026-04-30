@@ -502,17 +502,17 @@ export const AiTripCard = ({ className }) => {
         {trips?.map((trip, i) => (
           <div
             key={i}
-            className="grid grid-cols-12 gap-7 bg-card p-3 rounded-lg cursor-pointer border"
+            className="flex items-start gap-3 bg-card p-3 rounded-lg cursor-pointer border overflow-hidden"
             onClick={() => navigate(`/trips/${i}/ai`)}
           >
-            <Earth className="gradient-btn box-content p-2 rounded-lg col-span-2" />
+            <Earth className="gradient-btn shrink-0 box-content p-2 rounded-lg" />
 
-            <div className="col-span-10">
-              <h4 className="font-semibold text-sm">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-semibold text-sm truncate">
                 {trip.quickSummary.destination}
               </h4>
 
-              <p className="text-xs max-w-[190px]">
+              <p className="text-xs truncate">
                 {trip.itinerary?.[0]?.dayTitle || "Top attractions"}
               </p>
 
@@ -520,6 +520,7 @@ export const AiTripCard = ({ className }) => {
                 <Badge className="bg-gray-500/60 text-white">
                   ₹{trip.quickSummary.budget}
                 </Badge>
+
                 <Badge className="bg-gray-500/60 text-white">
                   {trip.quickSummary.totalDays} days
                 </Badge>

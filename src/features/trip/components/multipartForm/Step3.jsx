@@ -51,7 +51,6 @@ export default function Step3({ nextStep, prevStep }) {
       toast.error(
         <ErrorToast
           message={error?.response?.data?.message}
-          statusCode={error?.status}
         />,
         {
           className: "!bg-card !text-xs !border",
