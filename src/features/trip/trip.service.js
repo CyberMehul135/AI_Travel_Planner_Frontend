@@ -15,8 +15,8 @@ export const createTrip = async (tripData) => {
   return res.data;
 };
 
-export const getTrips = async () => {
-  const res = await authAxios.get(`/api/v1/itinery/`);
+export const getTrips = async (search = "") => {
+  const res = await authAxios.get(`/api/v1/itinery/?search=${search}`);
   return res.data;
 };
 

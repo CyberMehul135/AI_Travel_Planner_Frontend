@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Plane } from "lucide-react";
+import { Plane } from "lucide-react"; 
 import Google from "@/assets/icons/google.svg?react";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
